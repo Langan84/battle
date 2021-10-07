@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'sinatra/reloader'
 
 class Battle < Sinatra::Base
+  enable :sessions
   configure :development do
     register Sinatra::Reloader
   end
@@ -11,11 +12,16 @@ class Battle < Sinatra::Base
   end
 
   post '/names' do
-    @NAME1 = params[:Name1]
-    @NAME2 = params[:Name2]
-    erb :play
+    session[:player_1_name] = params[:Name1]
+    session[:player_2_name] = params[:Name2]
+    redirect '/play'
   end
 
+  get '/play' do
+    @player_1_name = session[:player_1_name]
+    @player_2_name = session[:player_2_name]
+    erb :play
+  end
   # start the server if ruby file executed directly
   run! if app_file == $0
 
