@@ -1,12 +1,9 @@
 feature 'Entering 2 names' do
   scenario 'submitting 2 names' do
-    visit('/')
-    fill_in 'Name1', with: 'Charlotte'
-    fill_in 'Name2', with: 'Mittens'
-    click_button 'submit_names'
-
+    sign_in_and_play
+    
     save_and_open_page
 
-    expect(page).to have_content 'Charlotte vs. Mittens'
+    expect(page).to have_content 'Jack vs. Jill'
   end
 end
